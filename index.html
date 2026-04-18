@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jordan Gajewski</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: #0a0a0a;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    /* Background layers */
+    .bg {
+      position: fixed;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+      z-index: 0;
+    }
+    .bg.active { opacity: 1; }
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 1;
+    }
+
+    /* Layout */
+    .site {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3rem 4rem;
+    }
+
+    /* Name */
+    .name {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 400;
+    }
+
+    /* Nav list */
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    nav ul li a {
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.25);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      transition: color 0.3s ease;
+      display: inline-block;
+    }
+
+    nav ul li a:hover {
+      color: rgba(255, 255, 255, 1);
+    }
+
+    /* Footer line */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .footer-left {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    .footer-right {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    .footer-right a {
+      color: rgba(255, 255, 255, 0.25);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-right a:hover {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .site { padding: 2rem; }
+      nav ul li a { font-size: clamp(2rem, 10vw, 3rem); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background image layers -->
+  <div class="bg" id="bg-bnw"
+    style="background-image: url('https://images.squarespace-cdn.com/content/v1/5ec30ef91471826158b5f974/0640e7bd-ae6f-437e-a01c-e17fb089552d/DSCF3714.JPG');">
+  </div>
+  <div class="bg" id="bg-color"
+    style="background-image: url('https://images.squarespace-cdn.com/content/v1/5ec30ef91471826158b5f974/1679962905564-UB6RH8TW7KCOVXKXXWUJ/DSC05653.jpg');">
+  </div>
+  <div class="bg" id="bg-video"
+    style="background-image: url('https://images.squarespace-cdn.com/content/v1/5ec30ef91471826158b5f974/b7fcd2dc-a4cc-454c-86bb-04fdb4c04e8f/DSC08104-2.jpg');">
+  </div>
+  <div class="bg" id="bg-about"
+    style="background-image: url('https://images.squarespace-cdn.com/content/v1/5ec30ef91471826158b5f974/1e11ee17-45b6-49cb-8278-f91937a4919c/DSCF0933.jpg');">
+  </div>
+  <div class="bg" id="bg-contact"
+    style="background-image: url('https://images.squarespace-cdn.com/content/v1/5ec30ef91471826158b5f974/4e849dd4-0c03-48b7-8d08-a36eeaacede7/DSC06405.jpg');">
+  </div>
+
+  <div class="bg-overlay"></div>
+
+  <div class="site">
+
+    <div class="name">Jordan Gajewski</div>
+
+    <nav>
+      <ul>
+        <li><a href="bnw.html" data-bg="bnw">Black &amp; White</a></li>
+        <li><a href="color.html" data-bg="color">Color</a></li>
+        <li><a href="video.html" data-bg="video">Video</a></li>
+        <li><a href="about.html" data-bg="about">About</a></li>
+        <li><a href="contact.html" data-bg="contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="footer">
+      <span class="footer-left">Photography &amp; Film</span>
+      <div class="footer-right">
+        <a href="https://instagram.com" target="_blank">Instagram</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('nav a');
+    const bgs = document.querySelectorAll('.bg');
+
+    links.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        bgs.forEach(b => b.classList.remove('active'));
+        const target = document.getElementById('bg-' + link.dataset.bg);
+        if (target) target.classList.add('active');
+      });
+      link.addEventListener('mouseleave', () => {
+        bgs.forEach(b => b.classList.remove('active'));
+      });
+    });
+  </script>
+
+</body>
+</html>
